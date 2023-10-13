@@ -304,7 +304,7 @@ def main(argv):
       Z_list = list(particle_family.GetZpos())
       plots_plk1.UpdateCpp(X_list, Y_list, Z_list, sliced, slice_depth)
 
-  for i in range(0, 1500):
+  for i in range(0, 2100):
     print("starting evt" + str(datetime.now().time())) # time object
      
     particle_family.Move(v_mex5_slow, v_mex5_fast, 1, limits_particle, bound, i)

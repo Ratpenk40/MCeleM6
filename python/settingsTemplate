@@ -1,10 +1,10 @@
-v_MEX5fast:	4.9
-v_MEX5slow:	0.45
+v_MEX5fast:	1.96
+v_MEX5slow:	0.04
 v_plk1:	5.3
 not_used_kplk1:	0.05
 sliceDepth:	5
-initial_percentage_MEX5slow:	0.7
-initial_percentage_MEX5fast:	0.3
+initial_percentage_MEX5slow:	0.76
+initial_percentage_MEX5fast:	0.34
 k_Phosphatase_fast_slow:	0.0050
 k_Kinase_slow_fast_lower:	0.0005
 k_Kinase_slow_fast_upper:	0.00275
