@@ -134,7 +134,7 @@ class Plot2D():
     #plt.pause(0.1)
 
   def conc_calcCpp(self, X_list, Y_list, Z_list, id_list):
-    autosave = 10 # to save every N iterations, now set to 10 for debuggin purposes, I advise to 30 for QC of production runs
+    autosave = 100 # to save every N iterations, I advise to 10 for QC of production runs. 100 for exploratory work (only 21 images generated)
     self.counter += 1
     
     id0_slice = []
@@ -305,8 +305,8 @@ class Plot2D():
     fig_root_based.tight_layout()
     fig_root_based.canvas.draw()
     
-    if self.counter % autosave == 0: 
-      plt.imsave(os.path.join(self.path, f'Graphs/MEX-5-PlotB_t-{self.counter}.png'), np.array(fig_root_based.canvas.renderer.buffer_rgba()))
+    #if self.counter % autosave == 0: 
+    #  plt.imsave(os.path.join(self.path, f'Graphs/MEX-5-PlotB_t-{self.counter}.png'), np.array(fig_root_based.canvas.renderer.buffer_rgba()))
     #plt.show(block=False)
     #plt.pause(0.1)
     del histo3DSlow
