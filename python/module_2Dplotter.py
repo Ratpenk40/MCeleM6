@@ -89,7 +89,7 @@ class Plot2D:
         hist, xbins, ybins, im = self.ax1.hist2d(
             self.x, self.y, bins=self.limits[0][1], range=self.limits
         )
-        self.ax1.set_title("2D distribution MEX-5")
+        self.ax1.set_title("2D distribution MEX-6s")
         self.ax1.set_xlabel("Long axis (um)")
         self.ax1.set_ylabel("Short axis (um)")
         fig.colorbar(im)
@@ -123,7 +123,7 @@ class Plot2D:
         hist2 = self.ax2.plot(
             xbins, self.fit_func(xbins, params[0], params[1]), label="Fit"
         )
-        self.ax2.set_title(" MEX-5 gradient intensity")
+        self.ax2.set_title(" MEX-6 gradient intensity")
         self.ax2.set_ylabel("Normal. intensity (a.u.)")
         self.ax2.set_xlabel("Normal. embryo length")
 
@@ -134,7 +134,7 @@ class Plot2D:
         t_pre = np.arange(len(self.list_m_fit_pre))
         self.ax3 = fig.add_subplot(2, 2, 4)
         self.ax3.plot(t_pre, self.list_m_fit_pre, marker="", linewidth=1, alpha=0.9)
-        self.ax3.set_title("Slope vs time MEX-5")
+        self.ax3.set_title("Slope vs time MEX-6")
         self.ax3.set_ylabel("Intensity gradient (dI/dx)")
         self.ax3.set_xlabel("Time (s)")
 
@@ -356,8 +356,8 @@ class Plot2D:
 
         # For ax_id_conc_root
         ax_id_conc_root = fig_root_based.add_subplot(2, 2, 2)
-        ax_id_conc_root.plot(xbins_line, conc_root_mex5_slow, "r", label="MEX-5 slow")
-        ax_id_conc_root.plot(xbins_line, conc_root_mex5_fast, "b", label="MEX-5 fast")
+        ax_id_conc_root.plot(xbins_line, conc_root_mex5_slow, "r", label="MEX-6 slow")
+        ax_id_conc_root.plot(xbins_line, conc_root_mex5_fast, "b", label="MEX-6 fast")
         ax_id_conc_root.set(
             title="MEX-6 concentr.,  Central voxel",
             ylabel="Concentr. MEX-6s , MEX-6f",
