@@ -46,10 +46,10 @@ def main(argv):
     print("Starting...")
 
     # define vel and k param
-    v_mex5_fast = 0.0
-    v_mex5_slow = 0.0
+    v_MEXp_fast = 0.0
+    v_MEXp_slow = 0.0
     v_plk1 = 0.0
-    plk1_to_mex5 = 0.0
+    plk1_to_MEXp = 0.0
 
     if not os.path.exists("logs"):
         os.makedirs("logs")
@@ -63,16 +63,16 @@ def main(argv):
 
     file_log_name = "logs/" + date_time + "/summary_parameter.txt"
     file_log_name_k_plk1 = "logs/" + date_time + "/log_k_plk1.txt"
-    file_log_name_k_mex5 = "logs/" + date_time + "/log_k_mex5.txt"
-    file_log_name_profile_mex5 = "logs/" + date_time + "/log_profileAP_mex5.txt"
+    file_log_name_k_MEXp = "logs/" + date_time + "/log_k_MEXp.txt"
+    file_log_name_profile_MEXp = "logs/" + date_time + "/log_profileAP_MEXp.txt"
     file_log_name_profile_plk1 = "logs/" + date_time + "/log_profileAP_plk1.txt"
-    file_log_name_mex5_ratio_slow_fast = (
-        "logs/" + date_time + "/log_mex5_ratio_slow_fast.txt"
+    file_log_name_MEXp_ratio_slow_fast = (
+        "logs/" + date_time + "/log_MEXp_ratio_slow_fast.txt"
     )
-    file_log_v_mex5 = "logs/" + date_time + "/log_v_mex5.txt"
+    file_log_v_MEXp = "logs/" + date_time + "/log_v_MEXp.txt"
     file_log_v_plk1 = "logs/" + date_time + "/log_v_plk1.txt"
-    file_log_conc_id0_mex5 = "logs/" + date_time + "/conc_id0_mex5.txt"
-    file_log_conc_id1_mex5 = "logs/" + date_time + "/conc_id1_mex5.txt"
+    file_log_conc_id0_MEXp = "logs/" + date_time + "/conc_id0_MEXp.txt"
+    file_log_conc_id1_MEXp = "logs/" + date_time + "/conc_id1_MEXp.txt"
 
     file_log_conc_id0_plk1 = "logs/" + date_time + "/conc_id0_plk1.txt"
     file_log_conc_id1_plk1 = "logs/" + date_time + "/conc_id1_plk1.txt"
@@ -103,7 +103,7 @@ def main(argv):
     plk1_attach_to_mex_fast = 0
     plk1_attach_to_mex_slow = 1
     plk1_to_mex_multiplicator = 1
-    plk1_detached_when_mex5_changes = 0
+    plk1_detached_when_MEXp_changes = 0
 
     plk1_delay_start_time = 0.0
     plk1_delay_end_time = 100.0
@@ -157,10 +157,10 @@ def main(argv):
         temp_sett.append(float(line.replace("\n", "").split("\t")[1]))
     f_sett.close()
     print(temp_sett)
-    v_mex5_fast = temp_sett[0]
-    v_mex5_slow = temp_sett[1]
+    v_MEXp_fast = temp_sett[0]
+    v_MEXp_slow = temp_sett[1]
     v_plk1 = temp_sett[2]
-    plk1_to_mex5 = temp_sett[3]
+    plk1_to_MEXp = temp_sett[3]
     slice_depth = temp_sett[4]
     initial_slow = temp_sett[5]
     initial_fast = temp_sett[6]
@@ -172,16 +172,16 @@ def main(argv):
     plk1_attach_to_mex_slow = temp_sett[11]
     plk1_attach_to_mex_fast = temp_sett[12]
     plk1_to_mex_multiplicator = temp_sett[13]
-    plk1_detached_when_mex5_changes = temp_sett[14]
+    plk1_detached_when_MEXp_changes = temp_sett[14]
 
     plk1_delay_start_time = temp_sett[15]
     plk1_delay_end_time = temp_sett[16]
 
     assert (
-        v_mex5_fast != 0.0
-        and v_mex5_slow != 0.0
+        v_MEXp_fast != 0.0
+        and v_MEXp_slow != 0.0
         and v_plk1 != 0.0
-        and plk1_to_mex5 != 0.0
+        and plk1_to_MEXp != 0.0
     ), "something went wrong in reading the setting file"
 
     log.writeLine("Starting simulation ")
@@ -193,10 +193,10 @@ def main(argv):
     log.writeLine("sliceDepth " + str(slice_depth))
     log.writeLine("setting file " + str(settings))
     log.writeLine("setting file " + str(settings))
-    log.writeLine("v fast mex5 " + str(v_mex5_fast))
-    log.writeLine("v slow mex5 " + str(v_mex5_slow))
+    log.writeLine("v fast MEXp " + str(v_MEXp_fast))
+    log.writeLine("v slow MEXp " + str(v_MEXp_slow))
     log.writeLine("v plk1 " + str(v_plk1))
-    log.writeLine("plk1_to_mex5 " + str(plk1_to_mex5))
+    log.writeLine("plk1_to_MEXp " + str(plk1_to_MEXp))
     log.writeLine("initial_slow " + str(initial_slow))
     log.writeLine("initial_fast " + str(initial_fast))
     log.writeLine("k_fast_slow " + str(k_fast_slow))
@@ -207,25 +207,25 @@ def main(argv):
     log.writeLine("plk1_attach_to_mex_slow " + str(plk1_attach_to_mex_slow))
     log.writeLine("plk1_to_mex_multiplicator " + str(plk1_to_mex_multiplicator))
     log.writeLine(
-        "plk1_detached_when_mex5_changes " + str(plk1_detached_when_mex5_changes)
+        "plk1_detached_when_MEXp_changes " + str(plk1_detached_when_MEXp_changes)
     )
 
     log.writeLine("plk1_delay_start_time " + str(plk1_delay_start_time))
     log.writeLine("plk1_delay_end_time " + str(plk1_delay_end_time))
 
-    log.writeLine("log k mex5 " + str(file_log_name_k_mex5))
+    log.writeLine("log k MEXp " + str(file_log_name_k_MEXp))
     log.writeLine("log k plk1 " + str(file_log_name_k_plk1))
-    log.writeLine("log profile mex5 " + str(file_log_name_profile_mex5))
+    log.writeLine("log profile MEXp " + str(file_log_name_profile_MEXp))
     log.writeLine("log profile plk1 " + str(file_log_name_profile_plk1))
     log.writeLine(
-        "log profile ratio slow/fast " + str(file_log_name_mex5_ratio_slow_fast)
+        "log profile ratio slow/fast " + str(file_log_name_MEXp_ratio_slow_fast)
     )
 
-    log.writeLine("log v mex5 " + str(file_log_v_mex5))
+    log.writeLine("log v MEXp " + str(file_log_v_MEXp))
     log.writeLine("log v plk1 " + str(file_log_v_plk1))
 
-    log.writeLine("log conc id0 mex5 " + str(file_log_conc_id0_mex5))
-    log.writeLine("log conc id1 mex5 " + str(file_log_conc_id1_mex5))
+    log.writeLine("log conc id0 MEXp " + str(file_log_conc_id0_MEXp))
+    log.writeLine("log conc id1 MEXp " + str(file_log_conc_id1_MEXp))
     log.writeLine("log conc id0 plk1 " + str(file_log_conc_id0_plk1))
     log.writeLine("log conc id1 plk1 " + str(file_log_conc_id1_plk1))
     log.writeLine("log conc id2 plk1" + str(file_log_conc_id2_plk1))
@@ -248,19 +248,19 @@ def main(argv):
 
         limits_particle = limits2
 
-    log_k_mex5 = eloG(file_log_name_k_mex5)
-    log_profile_mex5 = eloG(file_log_name_profile_mex5)
-    log_mex5_ratio_slow_fast = eloG(file_log_name_mex5_ratio_slow_fast)
-    log_v_mex5 = eloG(file_log_v_mex5)
-    log_conc_id0_mex5 = eloG(file_log_conc_id0_mex5)
-    log_conc_id1_mex5 = eloG(file_log_conc_id1_mex5)
+    log_k_MEXp = eloG(file_log_name_k_MEXp)
+    log_profile_MEXp = eloG(file_log_name_profile_MEXp)
+    log_MEXp_ratio_slow_fast = eloG(file_log_name_MEXp_ratio_slow_fast)
+    log_v_MEXp = eloG(file_log_v_MEXp)
+    log_conc_id0_MEXp = eloG(file_log_conc_id0_MEXp)
+    log_conc_id1_MEXp = eloG(file_log_conc_id1_MEXp)
 
-    log_k_mex5.closeFile()
-    log_profile_mex5.closeFile()
-    log_mex5_ratio_slow_fast.closeFile()
-    log_v_mex5.closeFile()
-    log_conc_id0_mex5.closeFile()
-    log_conc_id1_mex5.closeFile()
+    log_k_MEXp.closeFile()
+    log_profile_MEXp.closeFile()
+    log_MEXp_ratio_slow_fast.closeFile()
+    log_v_MEXp.closeFile()
+    log_conc_id0_MEXp.closeFile()
+    log_conc_id1_MEXp.closeFile()
 
     if plk1:
         log_profile_plk1 = eloG(file_log_name_profile_plk1)
@@ -294,17 +294,17 @@ def main(argv):
             plk1_attach_to_mex_slow,
             plk1_attach_to_mex_fast,
             k_plk1_attach_to_free,
-            plk1_detached_when_mex5_changes,
+            plk1_detached_when_MEXp_changes,
             plk1_delay_start_time,
             plk1_delay_end_time,
         )
         particle_family_plk1.Shuffle(limits_particle)
-        particle_family_plk1.Mex5SetSettings(
+        particle_family_plk1.MEXpSetSettings(
             k_fast_slow, k_slow_fast_low, k_slow_fast_high
         )
 
     plots = plotter2D.Plot2D(
-        particles, limits3, limits, v_mex5_slow, v_mex5_fast, "logs/" + date_time
+        particles, limits3, limits, v_MEXp_slow, v_MEXp_fast, "logs/" + date_time
     )
 
     if plk1:
@@ -314,8 +314,8 @@ def main(argv):
             limits,
             plk1_to_mex_multiplicator,
             v_plk1,
-            v_mex5_slow,
-            v_mex5_fast,
+            v_MEXp_slow,
+            v_MEXp_fast,
             "logs/" + date_time,
         )
 
@@ -335,7 +335,7 @@ def main(argv):
     for i in range(0, 1500):
         print("starting evt" + str(datetime.now().time()))  # time object
 
-        particle_family.Move(v_mex5_slow, v_mex5_fast, 1, limits_particle, bound, i)
+        particle_family.Move(v_MEXp_slow, v_MEXp_fast, 1, limits_particle, bound, i)
 
         X_list = list(particle_family.GetXpos())
         Y_list = list(particle_family.GetYpos())
@@ -351,8 +351,8 @@ def main(argv):
         if plk1:
             particle_family_plk1.Move(
                 v_plk1,
-                v_mex5_slow,
-                v_mex5_fast,
+                v_MEXp_slow,
+                v_MEXp_fast,
                 1,
                 ratio,
                 concid0,
@@ -382,28 +382,28 @@ def main(argv):
             if drawMovie:
                 plots.FillDrawMovie()
 
-            log_k_mex5.log_open_append()
-            log_profile_mex5.log_open_append()
-            log_mex5_ratio_slow_fast.log_open_append()
-            log_v_mex5.log_open_append()
-            log_conc_id0_mex5.log_open_append()
-            log_conc_id1_mex5.log_open_append()
+            log_k_MEXp.log_open_append()
+            log_profile_MEXp.log_open_append()
+            log_MEXp_ratio_slow_fast.log_open_append()
+            log_v_MEXp.log_open_append()
+            log_conc_id0_MEXp.log_open_append()
+            log_conc_id1_MEXp.log_open_append()
 
-            log_k_mex5.writeLine(str(plots.klast))
-            log_profile_mex5.writeListRow(plots.profilelast)
-            log_mex5_ratio_slow_fast.writeListRow(ratio)
-            log_v_mex5.writeListRow(vel)
+            log_k_MEXp.writeLine(str(plots.klast))
+            log_profile_MEXp.writeListRow(plots.profilelast)
+            log_MEXp_ratio_slow_fast.writeListRow(ratio)
+            log_v_MEXp.writeListRow(vel)
 
-            log_conc_id0_mex5.writeListRow(concid0)
-            log_conc_id1_mex5.writeListRow(concid1)
+            log_conc_id0_MEXp.writeListRow(concid0)
+            log_conc_id1_MEXp.writeListRow(concid1)
 
-            log_k_mex5.closeFile()
-            log_profile_mex5.closeFile()
-            log_mex5_ratio_slow_fast.closeFile()
-            log_v_mex5.closeFile()
+            log_k_MEXp.closeFile()
+            log_profile_MEXp.closeFile()
+            log_MEXp_ratio_slow_fast.closeFile()
+            log_v_MEXp.closeFile()
 
-            log_conc_id0_mex5.closeFile()
-            log_conc_id1_mex5.closeFile()
+            log_conc_id0_MEXp.closeFile()
+            log_conc_id1_MEXp.closeFile()
 
             if plk1:
                 log_k_plk1.log_open_append()

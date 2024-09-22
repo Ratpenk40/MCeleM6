@@ -26,7 +26,7 @@ class particle3D_managerPLK1{
     std::vector<double> vec();
     
     void SetSettings(float, float, float, float, float, float );
-    void Mex5SetSettings(float, float, float );
+    void MEXpSetSettings(float, float, float );
 
     private:
     std::vector<particlePLK13D*> list_of_particles;

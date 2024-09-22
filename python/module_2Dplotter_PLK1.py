@@ -7,7 +7,7 @@ import os
 import ROOT
 
 class Plot2D:
-    def __init__(self, number, limits, limits_spheroid, plk1_to_mex_multiplicator, v_plk1, v_mex5_slow, v_mex5_fast, path):
+    def __init__(self, number, limits, limits_spheroid, plk1_to_mex_multiplicator, v_plk1, v_MEXp_slow, v_MEXp_fast, path):
         self.klast = 0.0
         self.profilelast = []
         self.x = [0] * number
@@ -16,8 +16,8 @@ class Plot2D:
         self.number = number
         self.kmultiplicator = plk1_to_mex_multiplicator
         self.v_plk1 = v_plk1
-        self.v_mex5_slow = v_mex5_slow
-        self.v_mex5_fast = v_mex5_fast
+        self.v_MEXp_slow = v_MEXp_slow
+        self.v_MEXp_fast = v_MEXp_fast
         self.center_y = (limits_spheroid[1][1] - limits_spheroid[0][1]) / 2
         self.list_m_fit_pre = []
 
@@ -184,12 +184,12 @@ class Plot2D:
 
         ax_id1 = fig_id1.add_subplot(4, 1, 2)
         hist1, xbins1, ybins1, im1 =ax_id1.hist2d(x2, y2, bins=self.limits[0][1], range=self.limits, vmin=v_min, vmax=0.8*v_max)
-        ax_id1.set(title="PLK-1 to MEX-5s", xlabel="Long axis (um)", ylabel="Short axis (um)", ylim=(0,30))
+        ax_id1.set(title="PLK-1 to MEXps", xlabel="Long axis (um)", ylabel="Short axis (um)", ylim=(0,30))
         fig_id1.colorbar(im1)
 
         ax_id2 = fig_id1.add_subplot(4, 1, 3)
         hist2, xbins2, ybins2, im2 = ax_id2.hist2d(x3, y3, bins=self.limits[0][1], range=self.limits, vmin=v_min, vmax=0.8*v_max)
-        ax_id2.set(title="PLK-1 to MEX-5f", xlabel="Long axis (um)", ylabel="Short axis (um)", ylim=(0,30))
+        ax_id2.set(title="PLK-1 to MEXpf", xlabel="Long axis (um)", ylabel="Short axis (um)", ylim=(0,30))
         fig_id1.colorbar(im2)
         fig_id1.tight_layout()
         fig_id1.canvas.draw()
@@ -214,8 +214,8 @@ class Plot2D:
 
         self.ax_id_conc = fig_id_ratio.add_subplot(2, 2, 1)
         self.ax_id_conc.plot(xbins_line, id0, 'g', label="Unbound PLK-1")
-        self.ax_id_conc.plot(xbins_line, id1, 'r', label="PLK-1 to MEX-5s")
-        self.ax_id_conc.plot(xbins_line, id2, 'b', label="PLK-1 to MEX-5f")
+        self.ax_id_conc.plot(xbins_line, id1, 'r', label="PLK-1 to MEXps")
+        self.ax_id_conc.plot(xbins_line, id2, 'b', label="PLK-1 to MEXpf")
         self.ax_id_conc.set_title("# PLK-1 p.les, integrat. on Y and Z")
         self.ax_id_conc.set_ylabel("Number p.les PLK-1 species")
         self.ax_id_conc.set_xlabel("Embryo length (um)")
@@ -223,8 +223,8 @@ class Plot2D:
 
         self.ax_id_slice = fig_id_ratio.add_subplot(2, 2, 2)
         self.ax_id_slice.plot(xbins_line, id0_slice, 'g', label="Unbound PLK-1")
-        self.ax_id_slice.plot(xbins_line, id1_slice, 'r', label="PLK-1 to MEX-5s")
-        self.ax_id_slice.plot(xbins_line, id2_slice, 'b', label="PLK-1 to MEX-5f")
+        self.ax_id_slice.plot(xbins_line, id1_slice, 'r', label="PLK-1 to MEXps")
+        self.ax_id_slice.plot(xbins_line, id2_slice, 'b', label="PLK-1 to MEXpf")
         self.ax_id_slice.set_title("# PLK-1 p.les, integrat. on Z")
         self.ax_id_slice.set_ylabel("# p.les PLK-1 species")
         self.ax_id_slice.set_xlabel("Embryo length (um)")
@@ -260,17 +260,17 @@ class Plot2D:
         max_arr = np.array(slow_content) + np.array(fast_content) + np.array(unbound_content)
         self.data_movie_2 = max_arr / np.max(max_arr)
 
-        v_average = (np.array(slow_content) * self.v_mex5_slow + np.array(fast_content) * self.v_mex5_fast + np.array(
+        v_average = (np.array(slow_content) * self.v_MEXp_slow + np.array(fast_content) * self.v_MEXp_fast + np.array(
             unbound_content) * self.v_plk1) / (np.array(slow_content) + np.array(fast_content) + np.array(
             unbound_content))
 
-        conc_root_mex5_slow = np.array(slow_content) / self.number
-        conc_root_mex5_fast = np.array(fast_content) / self.number
+        conc_root_MEXp_slow = np.array(slow_content) / self.number
+        conc_root_MEXp_fast = np.array(fast_content) / self.number
         conc_root_plk1_unbound = np.array(unbound_content) / self.number
 
         self.ax_id_conc_root = fig_id_ratio.add_subplot(2, 2, 3)
-        self.ax_id_conc_root.plot(xbins_line, conc_root_mex5_slow, 'r', label="PLK-1 to MEX-5s")
-        self.ax_id_conc_root.plot(xbins_line, conc_root_mex5_fast, 'b', label="PLK-1 to MEX-5f")
+        self.ax_id_conc_root.plot(xbins_line, conc_root_MEXp_slow, 'r', label="PLK-1 to MEXps")
+        self.ax_id_conc_root.plot(xbins_line, conc_root_MEXp_fast, 'b', label="PLK-1 to MEXpf")
         self.ax_id_conc_root.plot(xbins_line, conc_root_plk1_unbound, 'g', label="Unbound PLK-1")
         self.ax_id_conc_root.set_title("PLK-1 concentr.,  Central voxel")
         self.ax_id_conc_root.set_ylabel("Concentr. of PLK-1 species")
@@ -296,7 +296,7 @@ class Plot2D:
         del self.histo3DFast
         del self.histo3DUnbound
 
-        return conc_root_mex5_slow, conc_root_mex5_fast, conc_root_plk1_unbound, v_average
+        return conc_root_MEXp_slow, conc_root_MEXp_fast, conc_root_plk1_unbound, v_average
 
     def FillDrawMovie(self):
         self.ims_movie1.append(self.data_movie_1)

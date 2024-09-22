@@ -15,19 +15,19 @@ particlePLK13D::particlePLK13D(std::mt19937* generator):x(0)
     
 }
 
-void particlePLK13D::SetSettings(float k_to_slow_, float k_to_fast_, float k_decay_, float plk1_detached_when_mex5_changes_, float plk1_delay_start_time_, float plk1_delay_end_time_){
+void particlePLK13D::SetSettings(float k_to_slow_, float k_to_fast_, float k_decay_, float plk1_detached_when_MEXp_changes_, float plk1_delay_start_time_, float plk1_delay_end_time_){
     
     
-    plk1_to_mex5_slow = k_to_slow_;
-    plk1_to_mex5_fast = k_to_fast_;
+    plk1_to_MEXp_slow = k_to_slow_;
+    plk1_to_MEXp_fast = k_to_fast_;
     k_decay = k_decay_;
-    plk1_detached_when_mex5_changes = plk1_detached_when_mex5_changes_;
+    plk1_detached_when_MEXp_changes = plk1_detached_when_MEXp_changes_;
     plk1_delay_start_time = plk1_delay_start_time_;
     plk1_delay_end_time = plk1_delay_end_time_;
     
 }
 
-void particlePLK13D::Mex5SetSettings(float k_fast_slow_, float k_slow_fast_low_, float k_slow_fast_high_){
+void particlePLK13D::MEXpSetSettings(float k_fast_slow_, float k_slow_fast_low_, float k_slow_fast_high_){
     
     
     k_fast_slow = k_fast_slow_;
@@ -123,7 +123,7 @@ void particlePLK13D::ChangeID(double limits[][3], std::vector<double> ratio, std
                 double val = dist(*gen);
                 
                 if (val<funclin(x, time)){
-                    if (!plk1_detached_when_mex5_changes)
+                    if (!plk1_detached_when_MEXp_changes)
                         id_particle = 2;
                     else
                         id_particle = 0;
@@ -135,7 +135,7 @@ void particlePLK13D::ChangeID(double limits[][3], std::vector<double> ratio, std
                 std::uniform_real_distribution<> dist(0,1);
                 double val = dist(*gen);
                 if (val < k_fast_slow){
-                    if (!plk1_detached_when_mex5_changes)
+                    if (!plk1_detached_when_MEXp_changes)
                         id_particle = 1;
                     else
                         id_particle = 0;
@@ -152,9 +152,9 @@ void particlePLK13D::ChangeID(double limits[][3], std::vector<double> ratio, std
 
         
         
-        if (bool(plk1_to_mex5_slow) && !bool(plk1_to_mex5_fast)){
+        if (bool(plk1_to_MEXp_slow) && !bool(plk1_to_MEXp_fast)){
             
-            //PLK1 goes only to Mex5 SLOW!
+            //PLK1 goes only to MEXp SLOW!
             
             //calcolate k rate
             
@@ -172,9 +172,9 @@ void particlePLK13D::ChangeID(double limits[][3], std::vector<double> ratio, std
             
         }
         
-        else if (!bool(plk1_to_mex5_slow) && bool(plk1_to_mex5_fast)){
+        else if (!bool(plk1_to_MEXp_slow) && bool(plk1_to_MEXp_fast)){
             
-            //PLK1 goes only to Mex5 FAST!
+            //PLK1 goes only to MEXp FAST!
             
             //calcolate k rate
             
@@ -189,7 +189,7 @@ void particlePLK13D::ChangeID(double limits[][3], std::vector<double> ratio, std
         
         }
         
-        else if(bool(plk1_to_mex5_slow) && bool(plk1_to_mex5_fast)) {
+        else if(bool(plk1_to_MEXp_slow) && bool(plk1_to_MEXp_fast)) {
          
             double k_rate = conc1[int(x)]+conc0[int(x)];
             std::uniform_real_distribution<> dist(0,1);
