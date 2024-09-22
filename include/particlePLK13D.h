@@ -27,7 +27,7 @@ class particlePLK13D  {
     double GetID()  {return id_particle;};
     
     void SetSettings(float, float, float, float, float, float );
-    void Mex5SetSettings(float, float, float );
+    void MEXpSetSettings(float, float, float );
 
 
     private:
@@ -37,9 +37,9 @@ class particlePLK13D  {
     double z;
     
     float k_decay;
-    bool plk1_to_mex5_slow;
-    bool plk1_to_mex5_fast;
-    bool plk1_detached_when_mex5_changes;
+    bool plk1_to_MEXp_slow;
+    bool plk1_to_MEXp_fast;
+    bool plk1_detached_when_MEXp_changes;
     
     float k_fast_slow, k_slow_fast_low, k_slow_fast_high, plk1_delay_start_time, plk1_delay_end_time ;
     

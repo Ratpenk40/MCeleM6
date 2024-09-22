@@ -1,11 +1,11 @@
-# MCEle_ProteinGradient
+# MCeleM6
 
 
 ### General Info
 ***
 
-MCele_ProteinGradient is a MonteCarlo tool developed to reproduce the dynamics of protein gradient formation in the C. elegans embryo.
-In particular, it focuses on PLK-1 and MEX-5 proteins.
+MCeleM6 is a MonteCarlo tool developed to reproduce the dynamics of protein gradient formation in the C. elegans embryo.
+In particular, it focuses on PLK-1 and MEX proteins.
 
 ## Requirements
 ***
@@ -80,7 +80,7 @@ Example:
 ```
 python main.py -p 1000000 --bound --plk1 --threeD --slice --settings settingsTemplate 
 ```
-As a title of example a run as the example before (10^6 paricles for both MEX-5 and plk1) has a memory footprint of about 1000 MB.
+As a title of example a run as the example before (10^6 paricles for both MEXs and plk1) has a memory footprint of about 1000 MB.
 A sbatch shell script, called 'one-node.sh' for running on the cluster is provided, see HPC doc for instruction on how to modify: https://doc.eresearch.unige.ch/hpc/slurm
 
 ## Output
@@ -89,7 +89,7 @@ The simulation output is saved in the ./logs/X directory where X is the date and
 Several variables and information are reported, refer to the Supplementary material to know more.
 In case several runs with same settings are launched (as for example, by using the runner.sh script), results can be summaryzed by using the analyze.py script, which produces mean and std dev over the runs.
 ```
-python  analyze.py -f log_k_mex5.txt -o mex5.txt
+python  analyze.py -f log_k_MEXp.txt -o MEXp.txt
 ```
 where -f is the filename to parse and average over the runs, and -o is the output file to generate.
 ***
@@ -102,7 +102,7 @@ A sample output data is available in the logs directory, as well as a setting fi
 ***
 Conc_idY_XXX: 2D distribution of the protein XXX (Y component) as a function of time  (rows) and space along the embryo axis (columns) within the volume slice
 log_k_XXX: extrapolated gradient value from the linear fit for the protein XXX
-log_mex5_ratio_slow_fast: ratio between slow and fast component for MEX-5 protein along the embryo axis as a function of time within the volume slice
+log_MEXp_ratio_slow_fast: ratio between slow and fast component for MEXp protein along the embryo axis as a function of time within the volume slice
 log_profileAP_XXX: normalized particle concentration for protein XXX along the line ROI within the volume slice
 log_v_XXX: average velocity for particle XXX along the embryo axis as a function of time within the volume slice
 summary_parameter: summary of the input parameters used for the simulation run.
@@ -111,9 +111,9 @@ summary_parameter: summary of the input parameters used for the simulation run.
 ***
 For averaging results over multiple runs launched with same input parameters, run, in the shell, in the logs package directory (or in output directory), the Python macro: analyzer.py:
 ```
-python analyzer.py -f log_k_mex5.txt -o mex5.txt
+python analyzer.py -f log_k_MEXp.txt -o MEXp.txt
 ```
-this provides the output file (e.g.) mex-5.txt with a column for the average values and a column for standard deviations (STDEV) for each timeframe, of the parameters in the input files (e.g.) log_k_mex5.txt
+this provides the output file (e.g.) MEXp.txt with a column for the average values and a column for standard deviations (STDEV) for each timeframe, of the parameters in the input files (e.g.) log_k_MEXp.txt
 To analyze results that have a distribution in time ans space (2D matrices), run the Python macro analyzerConc.py, in the output folder
 ```
  python  analyzerConc.py -f log_v_plk1.txt -o v_plk1

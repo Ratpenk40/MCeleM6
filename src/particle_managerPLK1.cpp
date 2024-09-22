@@ -169,21 +169,21 @@ std::vector<double> particle3D_managerPLK1::vec(){
 	return ff;
 }
 
-void particle3D_managerPLK1::SetSettings(float k_to_slow_, float k_to_fast_, float k_decay_, float plk1_detached_when_mex5_changes_, float plk1_delay_start_time_, float plk1_delay_end_time_){
+void particle3D_managerPLK1::SetSettings(float k_to_slow_, float k_to_fast_, float k_decay_, float plk1_detached_when_MEXp_changes_, float plk1_delay_start_time_, float plk1_delay_end_time_){
     
     for(unsigned int i=0; i<list_of_particles.size();  i++ ){
         
-        list_of_particles[i]->SetSettings(k_to_slow_, k_to_fast_, k_decay_, plk1_detached_when_mex5_changes_, plk1_delay_start_time_, plk1_delay_end_time_);
+        list_of_particles[i]->SetSettings(k_to_slow_, k_to_fast_, k_decay_, plk1_detached_when_MEXp_changes_, plk1_delay_start_time_, plk1_delay_end_time_);
         
     }
     
 }
 
-void particle3D_managerPLK1::Mex5SetSettings(float k_fast_slow_, float k_slow_fast_low_, float k_slow_fast_high_){
+void particle3D_managerPLK1::MEXpSetSettings(float k_fast_slow_, float k_slow_fast_low_, float k_slow_fast_high_){
     
     for(unsigned int i=0; i<list_of_particles.size();  i++ ){
         
-        list_of_particles[i]->Mex5SetSettings(k_fast_slow_,  k_slow_fast_low_,  k_slow_fast_high_);
+        list_of_particles[i]->MEXpSetSettings(k_fast_slow_,  k_slow_fast_low_,  k_slow_fast_high_);
         
     }
     
@@ -218,7 +218,7 @@ BOOST_PYTHON_MODULE(particle3D_managerPLK1)
     .def("GetID", &particle3D_managerPLK1::GetID)
     .def("vec", &particle3D_managerPLK1::vec)
     .def("SetSettings", &particle3D_managerPLK1::SetSettings)
-    .def("Mex5SetSettings", &particle3D_managerPLK1::Mex5SetSettings)
+    .def("MEXpSetSettings", &particle3D_managerPLK1::MEXpSetSettings)
 
     ;
 }

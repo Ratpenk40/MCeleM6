@@ -13,7 +13,7 @@ y_values = [point1[1], point2[1]]
 
 
 class Plot2D:
-    def __init__(self, number, limits, limits_spheroid, v_mex5_slow, v_mex5_fast, path):
+    def __init__(self, number, limits, limits_spheroid, v_MEXp_slow, v_MEXp_fast, path):
         self.klast = 0.0
         self.profilelast = []
         self.x = [0] * number
@@ -44,8 +44,8 @@ class Plot2D:
         self.data_movie_2 = []
 
         #   ROOT Stuff
-        self.v_slow = v_mex5_slow
-        self.v_fast = v_mex5_fast
+        self.v_slow = v_MEXp_slow
+        self.v_fast = v_MEXp_fast
 
     def Update(self, particles, sliceD, slice_depth):
         del self.x[:]
@@ -89,7 +89,7 @@ class Plot2D:
         hist, xbins, ybins, im = self.ax1.hist2d(
             self.x, self.y, bins=self.limits[0][1], range=self.limits
         )
-        self.ax1.set_title("2D distribution MEX-6s")
+        self.ax1.set_title("2D distribution MEXps")
         self.ax1.set_xlabel("Long axis (um)")
         self.ax1.set_ylabel("Short axis (um)")
         fig.colorbar(im)
@@ -123,7 +123,7 @@ class Plot2D:
         hist2 = self.ax2.plot(
             xbins, self.fit_func(xbins, params[0], params[1]), label="Fit"
         )
-        self.ax2.set_title(" MEX-6 gradient intensity")
+        self.ax2.set_title(" MEXp gradient intensity")
         self.ax2.set_ylabel("Normal. intensity (a.u.)")
         self.ax2.set_xlabel("Normal. embryo length")
 
@@ -134,7 +134,7 @@ class Plot2D:
         t_pre = np.arange(len(self.list_m_fit_pre))
         self.ax3 = fig.add_subplot(2, 2, 4)
         self.ax3.plot(t_pre, self.list_m_fit_pre, marker="", linewidth=1, alpha=0.9)
-        self.ax3.set_title("Slope vs time MEX-6")
+        self.ax3.set_title("Slope vs time MEXp")
         self.ax3.set_ylabel("Intensity gradient (dI/dx)")
         self.ax3.set_xlabel("Time (s)")
 
@@ -180,14 +180,14 @@ class Plot2D:
             x3, y3, bins=self.limits[0][1], range=self.limits
         )
         ax_id2.set(
-            title="2D concentration MEX-6",
+            title="2D concentration MEXp",
             xlabel="Long axis (um)",
             ylabel="Short axis (um)",
             ylim=(0, 30),
         )
         fig_id1.colorbar(im2)
 
-        # normalisation of the plot colors intensities with vmin and vmax on the total MEX-5
+        # normalisation of the plot colors intensities with vmin and vmax on the total MEXp
         v_min = np.min(hist2)
         v_max = np.max(hist2)
 
@@ -196,7 +196,7 @@ class Plot2D:
             x1, y1, bins=self.limits[0][1], range=self.limits, vmin=v_min, vmax=v_max
         )
         ax_id0.set(
-            title="2D concentration MEX-6s",
+            title="2D concentration MEXps",
             xlabel="Long axis (um)",
             ylabel="Short axis (um)",
             ylim=(0, 30),
@@ -213,7 +213,7 @@ class Plot2D:
             vmax=int(2 / 3 * v_max),
         )
         ax_id1.set(
-            title="2D concentration MEX-6f",
+            title="2D concentration MEXpf",
             xlabel="Long axis (um)",
             ylabel="Short axis (um)",
             ylim=(0, 30),
@@ -226,7 +226,7 @@ class Plot2D:
         # converting the canvas to a pixel matrix
         if self.counter % autosave == 0:
             plt.imsave(
-                os.path.join(self.path, f"Graphs/MEX-6-Embryo_t-{self.counter}.png"),
+                os.path.join(self.path, f"Graphs/MEXp-Embryo_t-{self.counter}.png"),
                 np.array(fig_id1.canvas.renderer.buffer_rgba()),
             )
 
@@ -250,7 +250,7 @@ class Plot2D:
         ax_id_ratio.plot(xbins_line, ratio)
         ax_id_ratio.set(
             title="Ratio, integrat. on Z",
-            ylabel="Ratio MEX-6s/MEX-6f",
+            ylabel="Ratio MEXps/MEXpf",
             xlabel="Embryo length (um)",
         )
 
@@ -258,41 +258,41 @@ class Plot2D:
         ax_id_ratio2.plot(xbins_line, ratio2)
         ax_id_ratio2.set(
             title="Ratio, integrat. on Y and Z",
-            ylabel="Ratio MEX-6s/MEX-6f",
+            ylabel="Ratio MEXps/MEXpf",
             xlabel="Embryo length (um)",
         )
 
         ax_id_conc = fig_id_ratio.add_subplot(3, 2, 3)
-        ax_id_conc.plot(xbins_line, id0, "r", label="MEX-5s")
-        ax_id_conc.plot(xbins_line, id1, "b", label="MEX-5f")
+        ax_id_conc.plot(xbins_line, id0, "r", label="MEXps")
+        ax_id_conc.plot(xbins_line, id1, "b", label="MEXpf")
         ax_id_conc.set(
-            title="# MEX-6 p.les, integrat. on Y and Z",
-            ylabel="# p.les MEX-6s , MEX-6f",
+            title="# MEXp p.les, integrat. on Y and Z",
+            ylabel="# p.les MEXps , MEXpf",
             xlabel="Embryo length (um)",
         )
         ax_id_conc.legend(loc="upper right", frameon=False)
 
         ax_id_slice = fig_id_ratio.add_subplot(3, 2, 4)
-        ax_id_slice.plot(xbins_line, id0_slice, "r", label="MEX-6s")
-        ax_id_slice.plot(xbins_line, id1_slice, "b", label="MEX-6f")
+        ax_id_slice.plot(xbins_line, id0_slice, "r", label="MEXps")
+        ax_id_slice.plot(xbins_line, id1_slice, "b", label="MEXpf")
         ax_id_slice.set(
-            title="# MEX-6 p.les, integrat. on Z",
-            ylabel="# p.les MEX-6s , MEX-5f",
+            title="# MEXp p.les, integrat. on Z",
+            ylabel="# p.les MEXps , MEXpf",
             xlabel="Embryo length (um)",
         )
         ax_id_slice.legend(loc="upper right", frameon=False)
 
-        mex5_slow = np.array(id0_slice) / self.number
-        mex5_fast = np.array(id1_slice) / self.number
-        mex5_tot = mex5_slow + mex5_fast
+        MEXp_slow = np.array(id0_slice) / self.number
+        MEXp_fast = np.array(id1_slice) / self.number
+        MEXp_tot = MEXp_slow + MEXp_fast
 
         ax_id_slice_conc = fig_id_ratio.add_subplot(3, 2, 5)
-        ax_id_slice_conc.plot(xbins_line, mex5_tot, "g", label="Tot. concentr.")
-        ax_id_slice_conc.plot(xbins_line, mex5_slow, "r", label="MEX-5s")
-        ax_id_slice_conc.plot(xbins_line, mex5_fast, "b", label="MEX-55f")
+        ax_id_slice_conc.plot(xbins_line, MEXp_tot, "g", label="Tot. concentr.")
+        ax_id_slice_conc.plot(xbins_line, MEXp_slow, "r", label="MEXps")
+        ax_id_slice_conc.plot(xbins_line, MEXp_fast, "b", label="MEXp5f")
         ax_id_slice_conc.set(
-            title="MEX-6 concentrat., integrat. on Z",
-            ylabel="Conc. MEX-6s + MEX-6f",
+            title="MEXp concentrat., integrat. on Z",
+            ylabel="Conc. MEXps + MEXpf",
             xlabel="Embryo length (um)",
         )
         ax_id_slice_conc.legend(loc="upper right", frameon=False)
@@ -302,7 +302,7 @@ class Plot2D:
 
         if self.counter % autosave == 0:
             plt.imsave(
-                os.path.join(self.path, f"Graphs/MEX-6-PlotA_t-{self.counter}.png"),
+                os.path.join(self.path, f"Graphs/MEXp-PlotA_t-{self.counter}.png"),
                 np.array(fig_id_ratio.canvas.renderer.buffer_rgba()),
             )
 
@@ -341,26 +341,26 @@ class Plot2D:
         ax_id_ratio3.plot(xbins_line, ratio3)
         ax_id_ratio3.set(
             title="Ratio, Central Voxel",
-            ylabel="Ratio MEX-6s/MEX-6f",
+            ylabel="Ratio MEXps/MEXpf",
             xlabel="Embryo length (um)",
         )
-        ax_id_ratio3.set_ylabel("Ratio MEX-6s/MEX-6f")
+        ax_id_ratio3.set_ylabel("Ratio MEXps/MEXpf")
         ax_id_ratio3.set_xlabel("Embryo length (um)")
 
         v_average = (
             np.array(slow_content) * self.v_slow + np.array(fast_content) * self.v_fast
         ) / (np.array(slow_content) + np.array(fast_content))
 
-        conc_root_mex5_slow = np.array(slow_content) / self.number
-        conc_root_mex5_fast = np.array(fast_content) / self.number
+        conc_root_MEXp_slow = np.array(slow_content) / self.number
+        conc_root_MEXp_fast = np.array(fast_content) / self.number
 
         # For ax_id_conc_root
         ax_id_conc_root = fig_root_based.add_subplot(2, 2, 2)
-        ax_id_conc_root.plot(xbins_line, conc_root_mex5_slow, "r", label="MEX-6 slow")
-        ax_id_conc_root.plot(xbins_line, conc_root_mex5_fast, "b", label="MEX-6 fast")
+        ax_id_conc_root.plot(xbins_line, conc_root_MEXp_slow, "r", label="MEXp slow")
+        ax_id_conc_root.plot(xbins_line, conc_root_MEXp_fast, "b", label="MEXp fast")
         ax_id_conc_root.set(
-            title="MEX-6 concentr.,  Central voxel",
-            ylabel="Concentr. MEX-6s , MEX-6f",
+            title="MEXp concentr.,  Central voxel",
+            ylabel="Concentr. MEXps , MEXpf",
             xlabel="Embryo length (um)",
         )
         ax_id_conc_root.legend(loc="upper right", frameon=False)
@@ -369,8 +369,8 @@ class Plot2D:
         av_velocity = fig_root_based.add_subplot(2, 2, 3)
         av_velocity.plot(xbins_line, v_average)
         av_velocity.set(
-            title="Mean MEX-6 velocity, Central Voxel",
-            ylabel="Mean velocity MEX-6s, MEX-5f",
+            title="Mean MEXp velocity, Central Voxel",
+            ylabel="Mean velocity MEXps, MEXpf",
             xlabel="Embryo length (um)",
         )
 
@@ -378,7 +378,7 @@ class Plot2D:
         fig_root_based.canvas.draw()
 
         # if self.counter % autosave == 0:
-        #  plt.imsave(os.path.join(self.path, f'Graphs/MEX-5-PlotB_t-{self.counter}.png'), np.array(fig_root_based.canvas.renderer.buffer_rgba()))
+        #  plt.imsave(os.path.join(self.path, f'Graphs/MEXp-PlotB_t-{self.counter}.png'), np.array(fig_root_based.canvas.renderer.buffer_rgba()))
         # plt.show(block=False)
         # plt.pause(0.1)
         del histo3DSlow
@@ -386,8 +386,8 @@ class Plot2D:
 
         return (
             ratio2.tolist(),
-            conc_root_mex5_slow.tolist(),
-            conc_root_mex5_fast.tolist(),
+            conc_root_MEXp_slow.tolist(),
+            conc_root_MEXp_fast.tolist(),
             v_average.tolist(),
         )
 
@@ -403,7 +403,7 @@ class Plot2D:
             container.append([plt.imshow(self.ims_movie1[i])])
         im_ani = animation.ArtistAnimation(fig, container, interval=50, blit=False)
         im_ani.save(
-            os.path.join(self.path, "2DMex5.html"), writer="imagemagick", fps=10, dpi=50
+            os.path.join(self.path, "2DMEXp.html"), writer="imagemagick", fps=10, dpi=50
         )
 
         fig2, a2x = plt.subplots()
