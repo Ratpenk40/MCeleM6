@@ -1,10 +1,10 @@
-# MCEle_ProteinGradient
+# MCeleM6
 
 
 ### General Info
 ***
 
-MCele_ProteinGradient is a MonteCarlo tool developed to reproduce the dynamics of protein gradient formation in the C. elegans embryo.
+MCeleM6 is a MonteCarlo tool developed to reproduce the dynamics of protein gradient formation in the C. elegans embryo.
 In particular, it focuses on PLK-1 and MEX proteins.
 
 ## Requirements
